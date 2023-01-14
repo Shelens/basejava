@@ -37,7 +37,7 @@ public class ArrayStorage {
                  resumeFound = true;
             }
         }
-        if (resumeFound == false){
+        if (!resumeFound){
             System.out.println("resume not found");
         } else {
         for (int i = index; i < storageSize - 1; i++) {  //1 2 3
