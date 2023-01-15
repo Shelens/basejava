@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 public class ArrayStorage {
     Resume[] storage = new Resume[10000];
-    int storageSize = size();
+    int storageSize;
 
     void clear() {
         for (int i = 0; i < storageSize; i++) {
@@ -17,35 +17,34 @@ public class ArrayStorage {
 
     void save(Resume r) {
         storage[storageSize] = r;
-        storageSize += 1;
+        storageSize++;
 
     }
 
     Resume get(String uuid) {
         for (int i = 0; i < storageSize; i++) {
             if (storage[i].uuid.equals(uuid)) return storage[i];
-       }
-        return  null;
+        }
+        return null;
     }
 
     void delete(String myUuid) {
-        int index = 0;
-        boolean resumeFound = false;
-        for (int i = 0; i < storageSize; i++) {
+        int index = -1;
+        for (int i = 0; i < storageSize; i++) { // 1 2 3
             if (storage[i].uuid.equals(myUuid)) {
-                 index = i;
-                 resumeFound = true;
+                index = i;
             }
         }
-        if (!resumeFound){
-            System.out.println("resume not found");
+        if (index != -1) {
+            for (int i = index; i < storageSize - 1; i++) {  //1 2 3
+                storage[i] = storage[i + 1];
+            }
+            storage[storageSize - 1] = null;
+            storageSize--;
         } else {
-        for (int i = index; i < storageSize - 1; i++) {  //1 2 3
-            storage[i] = storage[i + 1];
+            System.out.println("resume not found");
         }
-        storage[storageSize - 1] = null;
-        storageSize--;
-    }}
+    }
 
 
     /**
@@ -57,10 +56,6 @@ public class ArrayStorage {
     }
 
     int size() {
-        int count = 0;
-        for (Resume res : storage) {
-            if (res != null) ++count;
-        }
-        return count;
+        return storageSize;
     }
 }
